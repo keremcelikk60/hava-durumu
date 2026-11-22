@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { StyleSheet, Text, View, TextInput, ScrollView, SafeAreaView, TouchableOpacity, Keyboard, StatusBar, ActivityIndicator, Dimensions, Animated, Easing, RefreshControl } from 'react-native';
+import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity, Keyboard, StatusBar, ActivityIndicator, Animated, RefreshControl, useWindowDimensions } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import * as Location from 'expo-location';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
-
-const { width } = Dimensions.get('window');
 
 const TURKISH_CITIES = [
   "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Amasya", "Ankara", "Antalya", "Artvin", "Aydın", "Balıkesir",
@@ -74,7 +73,7 @@ KURALLAR:
 3. Sadece doğrudan tavsiyeyi yaz.
 4. Kesinlikle hiçbir emoji kullanma.`;
 
-    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${GEMINI_API_KEY}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ 
@@ -161,6 +160,7 @@ const getTempGradient = (min: number, max: number): readonly [string, string] =>
 };
 
 const WeatherScreen = React.memo(({ pageData, index, onRemove, isPreview, scrollX, refreshing, onRefresh }: any) => {
+  const { width } = useWindowDimensions();
   const [aiText, setAiText] = useState("Asistan analiz ediyor...");
 
   useEffect(() => {
@@ -300,6 +300,7 @@ const WeatherScreen = React.memo(({ pageData, index, onRemove, isPreview, scroll
 });
 
 export default function WeatherApp() {
+  const { width } = useWindowDimensions();
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);

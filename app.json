@@ -34,7 +34,13 @@
         }
       ],
       "expo-asset",
-      "expo-font"
+      "expo-font",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Bulunduğunuz konumun hava durumunu gösterebilmek için konum izni gerekiyor."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,
